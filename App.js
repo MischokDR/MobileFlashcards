@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import  Constants  from 'expo-constants';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import DeckList from './components/DeckList';
 import reducer from './reducers';
 import NewDeck from './components/NewDeck';
@@ -13,6 +13,7 @@ import { createAppContainer } from "react-navigation";
 import DeckDetail from './components/DeckDetail';
 import AddCard from './components/AddCard';
 import Quiz from './components/Quiz';
+import thunk from 'redux-thunk';
 
 function FlashStatusBar({ backgroundColor, ...props }) {
   return (
@@ -23,18 +24,18 @@ function FlashStatusBar({ backgroundColor, ...props }) {
 }
 
 const Tabs = createBottomTabNavigator({
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      tabBarLabel: 'New Deck',
-      tabBarIcon: () => <Ionicons name='md-add-circle' size={30} color='white' />
-    }
-  },
   DeckList: {
     screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: () => <Ionicons name='md-filing' size={30} color='white'/>
+    }
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      tabBarLabel: 'New Deck',
+      tabBarIcon: () => <Ionicons name='md-add-circle' size={30} color='white' />
     }
   },
 }, {
@@ -100,7 +101,7 @@ const AppContainer = createAppContainer(MainNavigator);
 export default class App extends Component {
   render(){
     return(
-      <Provider store={createStore(reducer)}>
+      <Provider store={createStore(reducer, applyMiddleware(thunk))}>
         <View style={{flex: 1}}>
           <FlashStatusBar backgroundColor={'black'} barStyle="light-content"/>
           <AppContainer />

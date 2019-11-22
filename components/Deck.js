@@ -5,15 +5,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class Deck extends Component {
   render() {
     return (
-      <View>
-        <TouchableOpacity
-          onPress={this.props.onPress}
-        >
-          <View style={styles.deck}>
-            <Text style={styles.title}>{this.props.title}</Text>
-            <Text style={styles.number}>{this.props.number} Cards</Text>
-          </View>
-        </TouchableOpacity>
+      <View style={styles.deck}>
+          <Text style={styles.title}>{this.props.title}</Text>
+          {this.props.number > 1
+            ? <Text style={styles.number}>{this.props.number} Cards</Text>
+            : <Text style={styles.number}>{this.props.number} Card</Text>
+          }
       </View>
     );
   }

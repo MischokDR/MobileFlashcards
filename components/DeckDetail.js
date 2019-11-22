@@ -10,7 +10,10 @@ class DeckDetail extends Component {
         <View style={styles.deck}>
           <Text style={styles.title}>{this.props.title}</Text>
           {console.log(this.props.title)}
-          <Text style={styles.text}>{this.props.number} Cards</Text>
+          {this.props.number > 0
+            ? <Text style={styles.text}>{this.props.number} Cards</Text>
+            : <Text style={styles.text}>{this.props.number} Card</Text>
+          }
         </View>
         <View style={styles.add}>
           <TouchableOpacity
@@ -84,12 +87,12 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps({ title, questions, number }) {
-  return {
-    title,
-    questions,
-    number,
-  }
-}
+// function mapStateToProps({ title, questions, number }) {
+//   return {
+//     title,
+//     questions,
+//     number,
+//   }
+// }
 
-export default connect(mapStateToProps)(DeckDetail)
+export default (DeckDetail)

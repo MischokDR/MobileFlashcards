@@ -3,9 +3,6 @@ import { AsyncStorage } from "react-native";
 
 export function getDecks() {
   return AsyncStorage.getItem(DECK_STORAGE_KEY)
-    .then((results) => {
-      return JSON.parse(results)
-    })
 }
 
 export function getDeck(title) {

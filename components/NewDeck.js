@@ -19,7 +19,7 @@ class NewDeck extends Component {
   submit = () => {
     this.props.dispatch(
       addDeck({
-        [generateUID()]: this.props.deck
+        [this.state.deck.title]: this.state.deck
       })
     )
 

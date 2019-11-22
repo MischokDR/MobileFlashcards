@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Text, ScrollView, View } from "react-native";
+import { Text, ScrollView, View, TouchableOpacity } from "react-native";
 import { getDecks } from "../utils/api";
 import { connect } from "react-redux";
 import Header from "./Header";
 import Deck from './Deck';
 import { getAllDecks } from "../actions";
+import { FlatList } from "react-native-gesture-handler";
 
 class DeckList extends Component {
 
@@ -14,17 +15,27 @@ class DeckList extends Component {
   }
 
   componentDidMount() {
-    getDecks()
-      .then((decks) => {
-        this.props.dispatch(getAllDecks(decks))
-      })
+    this.props.dispatch(getAllDecks)
+    console.log(this.props.decks)
   }
 
   render() {
-
+    const { decks, navigation } = this.props;
     return (
       <View>
         <Header text='Decks'/>
+        <ScrollView>
+          {Object.keys(decks).map(key => {
+            return (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("DeckDetail", {title: decks[key].title, number: decks[key].questions.length})}
+                key={key} 
+              >
+                <Deck title={decks[key].title} number={decks[key].questions.length}/>
+              </TouchableOpacity>
+            )
+          })}
+        </ScrollView>
       </View>
     );
   }
