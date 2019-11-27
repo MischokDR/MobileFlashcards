@@ -9,26 +9,15 @@ import { generateUID } from '../utils/helpers';
 
 class NewDeck extends Component {
   state= {
-    deck:{
-      title: '',
-      cards: []
-    }
-    
+    title: ''    
   }
 
   submit = () => {
-    this.props.dispatch(
-      addDeck({
-        [this.state.deck.title]: this.state.deck
-      })
-    )
+    this.props.dispatch(addDeck(this.state.title))
 
-    this.setState(() => ({
-      deck: {
-        title: '',
-        cards: []
-      }
-    }))
+    this.setState({
+      title: ''
+    })
 
     this.toHome();
 
@@ -46,7 +35,7 @@ class NewDeck extends Component {
         <Header text='New Deck' />
         <View style={styles.container}>  
           <Text style={styles.text}>What is the title of your new deck?</Text>
-          <TextInput style={styles.input} onChangeText={(title) => this.setState({title})} value={this.state.title} placeholder='Deck Title'/>
+          <TextInput style={styles.input} onChangeText={(title) => this.setState({title: title})} value={this.state.title} placeholder='Deck Title'/>
           <SubmitBtn onPress={this.submit} text='Create new Deck' disabled={this.state.title === ''} />
         </View>
       </View>

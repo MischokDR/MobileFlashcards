@@ -7,7 +7,7 @@ export default function SubmitBtn({ onPress, text, disabled }) {
   return (
     <View >
       <TouchableOpacity onPress={onPress} disabled={disabled}>
-        <View style={styles.btn}>
+        <View style={disabled ? styles.btnDisabled : styles.btn}>
           <Text style={styles.text}>{text}</Text>
         </View>
       </TouchableOpacity>
@@ -21,6 +21,13 @@ const styles = StyleSheet.create({
     margin: 120,
     padding: 10,
     backgroundColor: 'green',
+    borderRadius: 3
+  },
+  btnDisabled: {
+    width: 325,
+    margin: 120,
+    padding: 10,
+    backgroundColor: 'grey',
     borderRadius: 3
   },
   text: {

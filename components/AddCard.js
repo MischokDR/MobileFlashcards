@@ -1,17 +1,43 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet} from 'react-native';
+import { View, Text, TextInput, StyleSheet} from 'react-native';
+import { connect } from 'react-redux';
 import SubmitBtn from './SubmitBtn';
+import { addCard } from '../actions';
 
-export default class AddCard extends Component {
-    render(){
-        return(
-          <View style={styles.container}>
-            <TextInput style={styles.input} placeholder='Question'/>
-            <TextInput style={styles.input} placeholder='Answer'/>
-            <SubmitBtn text='Add Card' />
-          </View>
-        )
+class AddCard extends Component {
+  state = {
+    question: '',
+    answer: ''
+  }
+
+  submit = () => {
+    let card = {
+      question: this.state.question,
+      answer: this.state.answer
     }
+
+    this.props.dispatch(addCard(this.props.navigation.state.params.title, card))
+
+    this.setState({
+      question: '',
+      answer: '',
+    })
+    this.toDeck();
+  }
+  
+  toDeck = () => {
+    this.props.navigation.goBack()
+  };
+
+  render(){
+      return(
+        <View style={styles.container}>
+          <TextInput style={styles.input} onChangeText={(question) => this.setState({question})} placeholder='Question'/>
+          <TextInput style={styles.input} onChangeText={(answer) => this.setState({answer})} placeholder='Answer'/>
+          <SubmitBtn text='Add Card' onPress={this.submit} disabled={this.state.question.length === 0 && this.state.answer.length === 0} />
+        </View>
+      )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -29,3 +55,12 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
 })
+
+function mapStateToProps({ title, number }) {
+  return {
+    title,
+    number,
+  }
+}
+
+export default connect(mapStateToProps)(AddCard)

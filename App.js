@@ -14,6 +14,7 @@ import DeckDetail from './components/DeckDetail';
 import AddCard from './components/AddCard';
 import Quiz from './components/Quiz';
 import thunk from 'redux-thunk';
+import { setLocalNotification } from './utils/helpers';
 
 function FlashStatusBar({ backgroundColor, ...props }) {
   return (
@@ -88,6 +89,7 @@ const MainNavigator = createStackNavigator({
     screen: Quiz,
     navigationOptions: {
       title: 'Quiz',
+      headerLeft: null,
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'black',
@@ -99,6 +101,11 @@ const MainNavigator = createStackNavigator({
 const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render(){
     return(
       <Provider store={createStore(reducer, applyMiddleware(thunk))}>
